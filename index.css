@@ -1,0 +1,85 @@
+:root {
+    --spacing: 1rem;
+    --surface: #081425;
+    --surface-navbar: #152031;
+    --text: #d8e3fb;
+    --primary: #c3c0ff;
+    --secondary-bg: #263143;
+    /* components size */
+    --nav-bar: 4rem;
+    --header: 1.5rem;
+    --header-and-space: calc(var(--spacing) + var(--header));
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--surface);
+    color: var(--text);
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* navbar */
+
+.nav-bar {
+    flex-shrink: 0;
+    width: 100%;
+    background-color: var(--secondary-bg);
+    height: var(--nav-bar);
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-evenly;
+    margin-top: var(--spacing);
+
+    .view-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        background-color: transparent;
+        gap: .25rem;
+        color: var(--text);
+
+    }
+
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+
+/* header */
+.header {
+    padding-left: var(--spacing);
+    text-align: start;
+    width: 100%;
+    color: var(--primary);
+    font-size: .75rem;
+    height: 1.5rem;
+    h1{
+        margin: 0;
+    }
+    margin-top: var(--spacing);
+    margin-bottom: 2rem;
+}
+
+/* render */
+.render {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+    margin: 0 auto; 
+
+    overflow-y: auto;
+}

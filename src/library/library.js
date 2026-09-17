@@ -23,7 +23,7 @@ function renderCurrentPage() {
 
 export function initLibrary() {
     const groupButtons = document.querySelector('.groupButtons');
-
+    currentCategory = null;
     groupButtons.addEventListener('click', (e) => {
         const button = e.target.closest('.categoryButton');
         if (!button) return;

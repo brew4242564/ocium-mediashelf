@@ -10,6 +10,7 @@ export function initAdd() {
         const formData = new FormData(form);
         const title = formData.get('title');
         const author = formData.get('author') || 'Unknown';
+        const cover = formData.get('cover') || null;
         if(!selectedCategory){
             alert('Please, select one category before submit.');
             return;
@@ -21,6 +22,7 @@ export function initAdd() {
         addItem({
             title,
             author,
+            cover,
             category: selectedCategory
         })
 

@@ -15,6 +15,7 @@ function addItem(item){
         id: Date.now(),
         done: false,
         dateAdded: Date.now(),
+        cover: null,
         ...item
     }
     items.push(newItem)

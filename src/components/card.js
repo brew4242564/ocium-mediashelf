@@ -2,6 +2,9 @@ export function makeCard(item, options = {}) {
     const done = item.done ? 'is-done' : '';
     const { showControls = false } = options;
     const titleText = encodeURIComponent(item.title);
+    const isCover = item.cover;
+    let coverImg;
+
     const controls = showControls ? `
     <div class="card-controls">
         <button type="button" class="doneButton" data-id="${item.id}" data-function='done'>
@@ -15,11 +18,15 @@ export function makeCard(item, options = {}) {
             `
         : '';
     
+        if(!isCover){
+            coverImg = `<img src="https://placehold.co/300x400?text=${titleText}" alt="${item.title}" draggable="false">`
+        }else{
+            coverImg = `<img src="${item.cover}" alt="${item.title}" draggable="false">`
+        }
     return `
     <div class="media-card" data-id="${item.id}">
     <div class="cover-placeholder">
-            <img src="https://placehold.co/300x400?text=${titleText}" alt="${item.title}" draggable="false">
-
+        ${coverImg}
     </div>
     <div class="info">
         <h3 class="media-title">${item.title}</h3>

@@ -7,6 +7,10 @@ export function renderAddView(){
     <label>
         <input type="text" name='author' placeholder="Media Author..">
     </label>
+    <label>
+        <input type="text" name='cover' placeholder="Image Link..">
+    </label>
+    
     <fieldset>
     <div class="gridButtonContainer">
         <button class="categoryButton" data-category='series'>

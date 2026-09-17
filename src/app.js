@@ -34,5 +34,5 @@ document.querySelector('.nav-bar').addEventListener('click', (e) => {
     if (button) navigateTo(view);
 });
 
-navigateTo('add');
+navigateTo('library');
 

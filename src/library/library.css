@@ -8,6 +8,8 @@
     position: sticky;
     top: 0;
     z-index: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
     .categoryButton {
         background-color: transparent;
         border: 0;

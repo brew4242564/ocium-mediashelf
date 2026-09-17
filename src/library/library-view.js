@@ -2,6 +2,9 @@ export function renderLibraryView() {
     return `<div class="library">
     
     <div class="groupButtons">
+            <button class="categoryButton active" data-category='all' type="button">
+                All
+            </button>
             <button type="button" data-category='series' class="categoryButton">
                 Series
             </button>
@@ -19,9 +22,6 @@ export function renderLibraryView() {
             </button>
             <button class="categoryButton" data-category='podcast' type="button">
                 Podcasts
-            </button>
-             <button class="categoryButton active" data-category='all' type="button">
-                All
             </button>
     </div>
            <p>Next Up:</p> 

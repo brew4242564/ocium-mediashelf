@@ -6,7 +6,6 @@ import { initMain } from './main/main.js';
 import { initLibrary } from './library/library.js';
 const renderContainer = document.querySelector('.render');
 
-
 // Views
 function navigateTo(view) {
     switch (view) {

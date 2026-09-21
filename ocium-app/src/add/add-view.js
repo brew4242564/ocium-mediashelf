@@ -2,13 +2,13 @@ export function renderAddView(){
     return `
     <form class="add-form">
     <label>
-        <input type="text" name='title' placeholder="Media Title.." required>
+        <input type="text" name='title' placeholder="Media Title.." autocomplete="off" required>
     </label>
     <label>
-        <input type="text" name='author' placeholder="Media Author..">
+        <input type="text" name='author' placeholder="Media Author.." autocomplete="off">
     </label>
     <label>
-        <input type="text" name='cover' placeholder="Image Link..">
+        <input type="text" name='cover' placeholder="Image Link.." autocomplete="off">
     </label>
     
     <fieldset>

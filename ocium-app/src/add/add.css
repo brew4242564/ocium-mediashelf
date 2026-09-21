@@ -16,6 +16,10 @@
         color: var(--text);
         font-weight: 700;
     }
+    input:focus{
+        border: 0;
+        outline: 0;
+    }
     fieldset{
         width: 100%;
         border: 0;

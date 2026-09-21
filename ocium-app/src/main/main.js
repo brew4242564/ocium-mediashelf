@@ -16,11 +16,13 @@ export async function initMain() {
 export function initRandomButtons() {
     const container = document.querySelector('.gridButtonContainer');
     const randomResultContainer = document.querySelector('.randomResult');
-    container.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('categoryButton')) return;
+    container.addEventListener('click', async(e) => {
+        const button = e.target.closest('.categoryButton');
+        if (!button) return;
         console.log('funciono')
-        if (e.target.dataset.category) {
-            const random = getRandom(e.target.dataset.category);
+        if (button.dataset.category) {
+            const random = await getRandom(button.dataset.category);
+            console.log(random)
             if(!random) return;
             randomResultContainer.innerHTML = makeCard(random)
         }

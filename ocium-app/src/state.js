@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'mediaItems';
+import { supabase } from "./lib/supabase";
 
 function escapeHTML(str){
     const div = document.createElement('div')
@@ -15,17 +15,13 @@ function isSafeIMG(url){
     }
 }
 
-function getItems(){
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+async function getItems(){
+    const {data, error} = await supabase.from('ocium').select('*');
+    if(error) throw error;
+    return data;
 }
 
-function saveItems(items){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-}
-
-function addItem(item){
-    const items = getItems();
+async function addItem(item){
     const cleanTitle = item.title?.trim();
     if(!cleanTitle){
         throw new Error('title is required')
@@ -38,26 +34,29 @@ function addItem(item){
     };
 
     const newItem = {
-        id: Date.now(),
         done: false,
-        dateAdded: Date.now(),
         cover: null,
         ...safeItem
     }
-    items.push(newItem)
-    saveItems(items);
+    console.log(newItem)
+    const {data, error} = await supabase.from("ocium").insert(newItem).select();
+    if(error) throw error;
+    return data;
 }
 
-function deleteItem(id){
-    const items = getItems().filter(item => item.id !== id);
-    saveItems(items);
+async function deleteItem(id){
+    const {error} = await supabase.from("ocium")
+    .delete().eq('id',id);
+    if(error) throw error;
 }
 
-function toggleDone(id){
-    const items = getItems().map(item =>
-        item.id === id ? {...item, done: !item.done} : item
-    );
-    saveItems(items);
+async function toggleDone(id){
+    const {data: currentItem, error: fetchError} = await supabase.from("ocium")
+    .select("done").eq('id',id).single();
+    if(fetchError) throw fetchError;
+    const {error: updateError} = await supabase.from("ocium")
+    .update({done: !currentItem.done}).eq('id',id)
+    if(updateError) throw updateError;
 }
 
 

@@ -7,19 +7,19 @@ import { initLibrary } from './library/library.js';
 const renderContainer = document.querySelector('.render');
 
 // Views
-function navigateTo(view) {
+async function navigateTo(view) {
     switch (view) {
         case 'main':
             renderContainer.innerHTML = renderMainView();
-            initMain();
+            await initMain();
             break;
         case 'library':
             renderContainer.innerHTML = renderLibraryView();
-            initLibrary();
+            await initLibrary();
             break;
         case 'add':
             renderContainer.innerHTML = renderAddView();
-            initAdd();
+            await initAdd();
             break;
     }
 }

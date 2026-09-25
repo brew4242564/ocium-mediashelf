@@ -16,7 +16,8 @@ function isSafeIMG(url){
 }
 
 async function getItems(){
-    const {data, error} = await supabase.from('ocium').select('*');
+    const { data:{user}} = await supabase.auth.getUser();
+    const {data, error} = await supabase.from('ocium').select('*').eq('user_id', user.id);
     if(error) throw error;
     return data;
 }
@@ -32,11 +33,13 @@ async function addItem(item){
         author: escapeHTML((item.author || 'Unknown').trim()),
         cover: (item.cover && isSafeIMG(item.cover)) ? escapeHTML(item.cover) : null,
     };
-
+    const {data:{user}} = await supabase.auth.getUser();
+    if(!user) throw new Error ('Login to continue..');
     const newItem = {
         done: false,
         cover: null,
-        ...safeItem
+        ...safeItem,
+        user_id: user.id,
     }
     console.log(newItem)
     const {data, error} = await supabase.from("ocium").insert(newItem).select();

@@ -1,11 +1,23 @@
-import { supabase } from "./supabaseClient";
+import { supabase } from "./supabase";
 
-export const signUp = (email, password) =>
-  supabase.auth.signUp({ email, password });
+export async function signUp(email, password){
+  const {data, error} = await supabase.auth.signUp({ email, password});
+  if(error) throw error;
+  return data;
+}
 
-export const signIn = (email, password) =>
-  supabase.auth.signInWithPassword({ email, password });
+export async function signIn(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password});
+  if(error) throw error;
+  return data;
+}
 
-export const signOut = () => supabase.auth.signOut();
+export async function signOut() {
+  const {error} = await supabase.auth.signOut();
+  if(error) throw error;
+}
 
-export const getSession = () => supabase.auth.getSession();
+export async function getCurrentUser() {
+  const {data: {user}} = await supabase.auth.getUser();
+  return user;
+}

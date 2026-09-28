@@ -55,8 +55,11 @@ body {
         width: 1.5rem;
         height: 1.5rem;
     }
-}
 
+}
+.hide{
+    display: none;
+}
 
 /* header */
 .header {

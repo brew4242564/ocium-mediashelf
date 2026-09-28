@@ -32,21 +32,26 @@ async function navigateTo(view) {
 }
 
 // Navbar DOM
-
-document.querySelector('.nav-bar').addEventListener('click', (e) => {
+const navBar = document.querySelector('.nav-bar');
+navBar.addEventListener('click', (e) => {
     const button = e.target.closest('.view-btn');
     if (!button) return;
     const view = button.dataset.view;
-    if (button) navigateTo(view);
+    if (view) navigateTo(view);
 });
+
+function updateNavVisibility(session) {
+    navBar.classList.toggle('hide', !session);
+}
+
 const { data: {session} } = await supabase.auth.getSession();
+
 
 navigateTo(session ? 'main' : 'auth');
 
 supabase.auth.onAuthStateChange((event, session)=>{
-    if(event === 'SIGNED_IN') {
-        navigateTo('main');
-    } else if(event === 'SIGNED_OUT') {
-        navigateTo('auth')
-    }
+    updateNavVisibility(session);
+
+    if (event === 'SIGNED_IN') setTimeout(() => navigateTo('main'), 0);
+    else if (event === 'SIGNED_OUT') setTimeout(() => navigateTo('auth'), 0);
 })

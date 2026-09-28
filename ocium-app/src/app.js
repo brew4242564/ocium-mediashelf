@@ -44,14 +44,18 @@ function updateNavVisibility(session) {
     navBar.classList.toggle('hide', !session);
 }
 
-const { data: {session} } = await supabase.auth.getSession();
 
+// sessions
+const { data: {session} } = await supabase.auth.getSession();
+let currentUser = session?.user?.id ?? null;
 
 navigateTo(session ? 'main' : 'auth');
 
 supabase.auth.onAuthStateChange((event, session)=>{
+    const newUser = session?.user?.id ?? null;
     updateNavVisibility(session);
-
+    if(newUser === currentUser) return;
+    currentUser = newUser;
     if (event === 'SIGNED_IN') setTimeout(() => navigateTo('main'), 0);
     else if (event === 'SIGNED_OUT') setTimeout(() => navigateTo('auth'), 0);
 })

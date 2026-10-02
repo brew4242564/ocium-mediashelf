@@ -3,6 +3,7 @@ import { renderMediaList } from "../components/card-list.js";
 
 let currentCategory = null;
 let currentPage = 1;
+let mediaDone = null;
 const PAGE_SIZE = 10;
 
 
@@ -14,9 +15,9 @@ function paginate(items, page, pageSize) {
 
 async function renderCurrentPage() {
     const allItems = await getItems();
-    const filtered = currentCategory
-        ? allItems.filter(item => item.category === currentCategory)
-        : allItems;
+    let filtered = currentCategory
+        ? allItems.filter(item => item.category === currentCategory && item.done === mediaDone)
+        : allItems.filter(item => item.done === mediaDone);
     const pageItems = paginate(filtered, currentPage, PAGE_SIZE);
     const container = document.querySelector('.itemsContainer');
     container.innerHTML = renderMediaList(pageItems, { showControls: true });
@@ -41,14 +42,23 @@ export async function initLibrary() {
         currentPage = 1;
         await renderCurrentPage();
     });
-
+    showFinished();
     initCardCOntrol();
     renderCurrentPage();
 }
 
+async function showFinished(){
+    const finishedCheck = document.querySelector('.check');
+    mediaDone = finishedCheck.checked ? true : false;
+    finishedCheck.addEventListener('change', async () => {
+    mediaDone = finishedCheck.checked;
+    console.log(mediaDone);
+    await renderCurrentPage();
+});
+}
+
 export function initCardCOntrol() {
     const container = document.querySelector('.itemsContainer');
-
     container.addEventListener('click',async (e) => {
         const button = e.target.closest('[data-function]');
         if (!button) return;

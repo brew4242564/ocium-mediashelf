@@ -60,6 +60,7 @@ async function toggleDone(id){
     const {error: updateError} = await supabase.from("ocium")
     .update({done: !currentItem.done}).eq('id',id)
     if(updateError) throw updateError;
+
 }
 
 

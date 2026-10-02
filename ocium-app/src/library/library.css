@@ -5,11 +5,28 @@
     width: 100%;
 }
 
-.library > p {
+.subContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     margin: 0;
     font-size: 1.125rem;
     font-weight: 700;
+
+    .checkContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: .25rem;
+    }
 }
+
+.checkContainer input[type=checkbox]{
+    accent-color: var(--primary);
+    transform: scale(1.25);
+}
+
 
 /* category filter -> sticky pill bar */
 .groupButtons {
@@ -132,7 +149,7 @@
         }
     }
 
-    .library > p {
+    .subContainer {
         grid-area: heading;
     }
 

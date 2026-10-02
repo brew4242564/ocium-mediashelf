@@ -24,7 +24,14 @@ export function renderLibraryView() {
                 Podcasts
             </button>
     </div>
+           <div class="subContainer">           
            <p>Next Up:</p> 
+           <div class="checkContainer">
+           <label for="finished">Show finished media</label>
+           <input type="checkbox" class="check" name="finished">
+           </div>
+           </div>
+
     <section class="itemsContainer">
         
     </section>

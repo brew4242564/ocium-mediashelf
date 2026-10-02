@@ -24,7 +24,7 @@ export function makeCard(item, options = {}) {
             coverImg = `<img src="${item.cover}" alt="${item.title}" draggable="false">`
         }
     return `
-    <div class="media-card" data-id="${item.id}">
+    <div class="media-card ${done}" data-id="${item.id}">
     <div class="cover-placeholder">
         ${coverImg}
     </div>

@@ -1,17 +1,31 @@
 .media-card {
     display: flex;
-    min-height: 200px;
+    align-items: stretch;
+    gap: .75rem;
+    min-height: 0;
+    padding: .625rem;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+
+    &:hover {
+        background-color: var(--surface-hover);
+        border-color: var(--border-strong);
+    }
 
     .cover-placeholder {
-        width: 150px;
+        width: 4.5rem;
         aspect-ratio: 3/4;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         text-align: center;
-        padding-right: .5rem;
         flex-shrink: 0;
+        overflow: hidden;
+        border-radius: calc(var(--radius) - .25rem);
 
         img {
             object-fit: cover;
@@ -24,14 +38,32 @@
     .info {
         display: flex;
         flex-direction: column;
+        gap: .125rem;
         flex: 1;
-        padding-left: .25rem;
+        min-width: 0;
+    }
+
+    .media-title,
+    .media-author {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .media-title {
+        font-size: .875rem;
+    }
+
+    .media-author {
+        color: var(--text-muted);
+        font-size: .75rem;
     }
 
     .card-controls {
         display: flex;
         margin-top: auto;
-        gap: var(--spacing);
+        align-self: flex-start;
+        gap: .375rem;
     }
 
     h3,
@@ -43,7 +75,7 @@
 .media-list {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing);
+    gap: calc(var(--spacing) * .75);
 }
 
 /* card controls */
@@ -59,10 +91,63 @@
 }
 
 .doneButton, .deleteButton{
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
     background-color: transparent;
-    color: var(--primary);
     border: 0;
+    border-radius: .5rem;
+    color: var(--text-muted);
     cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+
+    &:hover {
+        background-color: var(--primary-soft);
+        color: var(--primary);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--terciary);
+        outline-offset: -2px;
+    }
+
+    svg {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
 }
 
+/* completed item */
+.media-card.is-done {
+    .media-title {
+        color: var(--text-muted);
+        text-decoration: line-through;
+    }
 
+    .cover-placeholder {
+        filter: grayscale(1);
+        opacity: .5;
+    }
+}
+
+/* empty state */
+.empty-message {
+    margin: 0;
+    padding: calc(var(--spacing) * 2) var(--spacing);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: .875rem;
+    text-align: center;
+}
+
+/* desktop */
+@media (min-width: 60rem) {
+    .media-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+        align-content: start;
+        gap: calc(var(--spacing) * .75);
+    }
+}

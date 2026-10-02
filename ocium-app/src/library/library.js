@@ -14,7 +14,6 @@ function paginate(items, page, pageSize) {
 
 async function renderCurrentPage() {
     const allItems = await getItems();
-    console.log(allItems)
     const filtered = currentCategory
         ? allItems.filter(item => item.category === currentCategory)
         : allItems;

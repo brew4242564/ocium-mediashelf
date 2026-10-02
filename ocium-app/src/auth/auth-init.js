@@ -24,7 +24,7 @@ export function initAuth(){
                 await signIn(email, password);
             }else{
                 await signUp(email, password);
-                alert('Account created. Verify your email.');
+                alert('Account created.');
             }
         } catch (error) {
             alert(error.message);

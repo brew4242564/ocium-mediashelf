@@ -1,20 +1,5 @@
 import { supabase } from "./lib/supabase";
 
-function escapeHTML(str){
-    const div = document.createElement('div')
-    div.textContent = str;
-    return div.innerHTML;
-}
-
-function isSafeIMG(url){
-    try{
-        const parsed = new URL(url);
-        return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-    }catch{
-        return false;
-    }
-}
-
 async function getItems(){
     const { data:{user}} = await supabase.auth.getUser();
     if(!user) return [];
@@ -40,18 +25,14 @@ async function addItem(item){
     if(!cleanTitle){
         throw new Error('title is required')
     };
-    const safeItem = {
-        ...item,
-        title: escapeHTML(cleanTitle),
-        author: escapeHTML((item.author || 'Unknown').trim()),
-        cover: (item.cover && isSafeIMG(item.cover)) ? escapeHTML(item.cover) : null,
-    };
     const {data:{user}} = await supabase.auth.getUser();
     if(!user) throw new Error ('Login to continue..');
     const newItem = {
+        ...item,
+        title: cleanTitle,
+        author: (item.author || 'Unknown').trim(),
+        cover: item.cover || null,
         done: false,
-        cover: null,
-        ...safeItem,
         user_id: user.id,
     }
     const {data, error} = await supabase.from("ocium").insert(newItem).select();

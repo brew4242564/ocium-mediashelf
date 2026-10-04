@@ -73,13 +73,29 @@
     box-shadow: inset 0 0 0 1px var(--primary);
 }
 
-/* =========================================================
-   DESKTOP  ·  add view
-   [ title  ]  [ category picker ]
-   [ author ]  [ category picker ]
-   [ cover ]  [ category picker ]
-   [ save                  ]
-   ========================================================= */
+.warnContainer{
+    width: 100%;
+    background-color: rgba(255, 0,0, 0.6);
+    padding: 1rem;
+    border-radius: var(--radius);
+
+    opacity: 1;
+    transition: opacity 0.3s ease;
+
+    h3{
+        margin: 0;
+    }
+    p{
+        margin: 0;
+    }
+}
+
+.warnContainer.invisible{
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Desktop */
 @media (min-width: 60rem) {
     .add-form {
         display: grid;

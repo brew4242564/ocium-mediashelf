@@ -55,8 +55,18 @@ export function renderAddView(){
     </fieldset>
 
     <button class="addButton">Save to library</button>
+
+    <div class="warnContainer invisible">
+    
+    </div>
 </form>
 `
 }
 
+export function renderWarn(title, message){
+    return `
+    <h3>${title}</h3>
+    <p>${message}</p>
+    `
+}
 

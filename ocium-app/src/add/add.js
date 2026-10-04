@@ -1,4 +1,5 @@
 import { addItem } from "../state.js";
+import { renderWarn } from "./add-view.js";
 export async function initAdd() {
     const form = document.querySelector('form');
     const categorySelector = form.querySelector('.gridButtonContainer');
@@ -13,11 +14,12 @@ export async function initAdd() {
         const cover = formData.get('cover') || null;
 
         if (!selectedCategory) {
-            alert('Please, select one category before submit.');
+            // title - category
+            createWarn("Category not selected", "Please, select one category before submit.");
             return;
         }
         if (!title.trim()) {
-            alert('Please, write some title.');
+            createWarn("Untitled", "Please, write some title");
             return;
         }
         try {
@@ -48,3 +50,21 @@ export async function initAdd() {
         selectedCategory = button.dataset.category;
     })
 }
+
+function createWarn(title, text) {
+    const warn = renderWarn(title, text);
+    const warnContainer = document.querySelector(".warnContainer");
+    warnContainer.innerHTML = warn;
+
+    warnContainer.classList.remove("invisible");
+    setTimeout(() => {
+        warnContainer.classList.add("invisible");
+    }, 5000);
+
+    warnContainer.addEventListener("transitionend", () => {
+        if (warnContainer.classList.contains("invisible")) {
+            warnContainer.innerHTML = "";
+        }
+    }, { once: true });
+}
+

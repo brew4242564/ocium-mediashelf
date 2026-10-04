@@ -1,16 +1,17 @@
 import { signIn, signUp } from "../lib/auth";
 
-export function initAuth(){
-    const form = document.querySelector('.authForm');
-    const submitBtn = document.querySelector('.authSubmit');
-    const toggleBtn = document.querySelector('.toggleMode');
+export function initAuth(root, isStale){
+    const form = root.querySelector('.authForm');
+    const submitBtn = root.querySelector('.authSubmit');
+    const toggleBtn = root.querySelector('.toggleMode');
+    if (!form || !submitBtn || !toggleBtn) return;
     let mode = 'signin';
 
 
     toggleBtn.addEventListener('click', ()=> {
         mode = mode === 'signin' ? 'signup' : 'signin';
         submitBtn.textContent = mode === 'signin' ? 'Sign in' : 'Sign up';
-        toggleBtn.textContent = mode === 'sigin' ? 'Sign up' : 'Log In'
+        toggleBtn.textContent = mode === 'signin' ? 'Sign up' : 'Log In'
     })
 
     form.addEventListener('submit', async(e) =>{

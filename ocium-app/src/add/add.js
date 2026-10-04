@@ -1,8 +1,9 @@
 import { addItem } from "../state.js";
 import { renderWarn } from "./add-view.js";
-export async function initAdd() {
-    const form = document.querySelector('form');
-    const categorySelector = form.querySelector('.gridButtonContainer');
+export async function initAdd(root, isStale) {
+    const form = root.querySelector('form');
+    const categorySelector = root.querySelector('.gridButtonContainer');
+    if (!form || !categorySelector) return;
     let selectedCategory = null;
 
     form.addEventListener('submit', async (e) => {
@@ -33,6 +34,7 @@ export async function initAdd() {
             alert("can't add item: " + error.message);
             return;
         }
+        if (isStale()) return;
         form.reset();
         categorySelector.querySelectorAll('.categoryButton').forEach(btn => btn.classList.remove('selected'));
         selectedCategory = null;

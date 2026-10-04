@@ -3,27 +3,30 @@ import { makeCard } from "../components/card.js";
 import { getItems } from "../state.js";
 
 
-export async function initMain() {
-    const carrousel = document.querySelector('.media-carrousel');
+export async function initMain(root, isStale) {
+    const carrousel = root.querySelector('.media-carrousel');
+    if (!carrousel) return;
+    initRandomButtons(root, isStale);
     const items = await getItems();
+    if (isStale()) return;
     const recents = items.slice(-5).reverse(); // last 5
     carrousel.innerHTML = renderMediaList(recents);
-    initRandomButtons();
 }
 
 
 
-export function initRandomButtons() {
-    const container = document.querySelector('.gridButtonContainer');
-    const randomResultContainer = document.querySelector('.randomResult');
+export function initRandomButtons(root, isStale) {
+    const container = root.querySelector('.gridButtonContainer');
+    const randomResultContainer = root.querySelector('.randomResult');
+    if (!container) return;
     container.addEventListener('click', async(e) => {
         const button = e.target.closest('.categoryButton');
         if (!button) return;
         console.log('funciono')
         if (button.dataset.category) {
             const random = await getRandom(button.dataset.category);
+            if(isStale() || !randomResultContainer) return;
             console.log(random)
-            if(!random) return;
             randomResultContainer.innerHTML = makeCard(random)
         }
     })

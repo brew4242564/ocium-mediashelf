@@ -9,25 +9,34 @@ import { renderAuthView } from './auth/auth-view.js';
 import { supabase } from './lib/supabase.js';
 const renderContainer = document.querySelector('.render');
 
+let navId = 0;
+
 // Views
 async function navigateTo(view) {
-    switch (view) {
-        case 'auth':
-            renderContainer.innerHTML = renderAuthView();
-            initAuth();
-            break;
-        case 'main':
-            renderContainer.innerHTML = renderMainView();
-            await initMain();
-            break;
-        case 'library':
-            renderContainer.innerHTML = renderLibraryView();
-            await initLibrary();
-            break;
-        case 'add':
-            renderContainer.innerHTML = renderAddView();
-            await initAdd();
-            break;
+    const token = ++navId;
+    const isStale = () => token !== navId;
+    try {
+        switch (view) {
+            case 'auth':
+                renderContainer.innerHTML = renderAuthView();
+                initAuth(renderContainer, isStale);
+                break;
+            case 'main':
+                renderContainer.innerHTML = renderMainView();
+                await initMain(renderContainer, isStale);
+                break;
+            case 'library':
+                renderContainer.innerHTML = renderLibraryView();
+                await initLibrary(renderContainer, isStale);
+                break;
+            case 'add':
+                renderContainer.innerHTML = renderAddView();
+                await initAdd(renderContainer, isStale);
+                break;
+        }
+    } catch (error) {
+        if (isStale()) return;
+        console.error(`failed to render "${view}"`, error);
     }
 }
 

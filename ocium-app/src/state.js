@@ -17,6 +17,7 @@ function isSafeIMG(url){
 
 async function getItems(){
     const { data:{user}} = await supabase.auth.getUser();
+    if(!user) return [];
     const {data, error} = await supabase.from('ocium').select('*').eq('user_id', user.id);
     if(error) throw error;
     return data;

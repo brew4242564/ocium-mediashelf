@@ -1,15 +1,16 @@
 import { renderMediaList } from "../components/card-list.js";
 import { makeCard } from "../components/card.js";
-import { getItems } from "../state.js";
+import { getItems, getRecentItems } from "../state.js";
+
+let randomId = 0;
 
 
 export async function initMain(root, isStale) {
     const carrousel = root.querySelector('.media-carrousel');
     if (!carrousel) return;
     initRandomButtons(root, isStale);
-    const items = await getItems();
+    const recents = await getRecentItems(5);
     if (isStale()) return;
-    const recents = items.slice(-5).reverse(); // last 5
     carrousel.innerHTML = renderMediaList(recents);
 }
 
@@ -24,8 +25,9 @@ export function initRandomButtons(root, isStale) {
         if (!button) return;
         console.log('funciono')
         if (button.dataset.category) {
+            const myId = ++randomId;
             const random = await getRandom(button.dataset.category);
-            if(isStale() || !randomResultContainer) return;
+            if(isStale() || myId !== randomId || !randomResultContainer) return;
             console.log(random)
             randomResultContainer.innerHTML = makeCard(random)
         }

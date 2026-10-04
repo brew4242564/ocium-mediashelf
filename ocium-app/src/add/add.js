@@ -3,11 +3,14 @@ import { renderWarn } from "./add-view.js";
 export async function initAdd(root, isStale) {
     const form = root.querySelector('form');
     const categorySelector = root.querySelector('.gridButtonContainer');
-    if (!form || !categorySelector) return;
+    const submitBtn = form.querySelector('.addButton');
+    if (!form || !categorySelector || !submitBtn) return;
     let selectedCategory = null;
+    let submitting = false;
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (submitting) return;
         console.log('tocaste el submit')
         const formData = new FormData(form);
         const title = formData.get('title');
@@ -23,6 +26,8 @@ export async function initAdd(root, isStale) {
             createWarn("Untitled", "Please, write some title");
             return;
         }
+        submitting = true;
+        submitBtn.disabled = true;
         try {
             await addItem({
                 title,
@@ -30,15 +35,17 @@ export async function initAdd(root, isStale) {
                 cover,
                 category: selectedCategory
             })
+            if (isStale()) return;
+            form.reset();
+            categorySelector.querySelectorAll('.categoryButton').forEach(btn => btn.classList.remove('selected'));
+            selectedCategory = null;
+            console.log('item guardado')
         } catch (error) {
             alert("can't add item: " + error.message);
-            return;
+        } finally {
+            submitting = false;
+            submitBtn.disabled = false;
         }
-        if (isStale()) return;
-        form.reset();
-        categorySelector.querySelectorAll('.categoryButton').forEach(btn => btn.classList.remove('selected'));
-        selectedCategory = null;
-        console.log('item guardado')
     })
 
 

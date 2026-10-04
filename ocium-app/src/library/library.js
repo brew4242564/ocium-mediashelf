@@ -4,6 +4,7 @@ import { renderMediaList } from "../components/card-list.js";
 let currentCategory = null;
 let currentPage = 1;
 let mediaDone = null;
+let renderId = 0;
 const PAGE_SIZE = 10;
 
 
@@ -14,10 +15,11 @@ function paginate(items, page, pageSize) {
 
 
 async function renderCurrentPage(root, isStale) {
+    const myId = ++renderId;
     const container = root.querySelector('.itemsContainer');
     if (!container) return;
     const allItems = await getItems();
-    if (isStale()) return;
+    if (isStale() || myId !== renderId) return;
     let filtered = currentCategory
         ? allItems.filter(item => item.category === currentCategory && item.done === mediaDone)
         : allItems.filter(item => item.done === mediaDone);
@@ -73,11 +75,13 @@ function initCardControl(itemsContainer, root, isStale) {
         const id = button.dataset.id;
 
         switch (action) {
-            case 'done':
-                await toggleDone(id);
+            case 'done': {
+                const toggled = await toggleDone(id);
+                if (isStale() || !toggled) return;
                 const card = e.target.closest('.media-card');
                 card?.classList.toggle('is-done');
                 break;
+            }
             case 'delete':
                 await deleteItem(id);
                 await renderCurrentPage(root, isStale);

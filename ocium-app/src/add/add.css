@@ -60,6 +60,11 @@
         filter: brightness(1.12);
     }
 
+    &:disabled{
+        opacity: .6;
+        cursor: not-allowed;
+    }
+
     &:focus-visible{
         outline: 2px solid var(--terciary);
         outline-offset: 2px;

@@ -54,7 +54,6 @@ async function addItem(item){
         ...safeItem,
         user_id: user.id,
     }
-    console.log(newItem)
     const {data, error} = await supabase.from("ocium").insert(newItem).select();
     if(error) throw error;
     return data;

@@ -11,7 +11,6 @@ export async function initAdd(root, isStale) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (submitting) return;
-        console.log('tocaste el submit')
         const formData = new FormData(form);
         const title = formData.get('title');
         const author = formData.get('author') || 'Unknown';
@@ -39,7 +38,6 @@ export async function initAdd(root, isStale) {
             form.reset();
             categorySelector.querySelectorAll('.categoryButton').forEach(btn => btn.classList.remove('selected'));
             selectedCategory = null;
-            console.log('item guardado')
         } catch (error) {
             alert("can't add item: " + error.message);
         } finally {
@@ -48,12 +46,9 @@ export async function initAdd(root, isStale) {
         }
     })
 
-
     categorySelector.addEventListener('click', (e) => {
-        e.preventDefault();
         const button = e.target.closest('.categoryButton');
         if (!button) return;
-        console.log('tocaste un boton')
         form.querySelectorAll('.categoryButton').forEach(btn => btn.classList.remove('selected'));
         button.classList.add('selected');
         selectedCategory = button.dataset.category;

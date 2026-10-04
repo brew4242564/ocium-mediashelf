@@ -1,5 +1,10 @@
 import { signIn, signUp } from "../lib/auth";
 
+const COPY = {
+    signin: { submit: 'Log in', toggle: 'Sign up' },
+    signup: { submit: 'Sign up', toggle: 'Log in' },
+};
+
 export function initAuth(root, isStale){
     const form = root.querySelector('.authForm');
     const submitBtn = root.querySelector('.authSubmit');
@@ -7,11 +12,15 @@ export function initAuth(root, isStale){
     if (!form || !submitBtn || !toggleBtn) return;
     let mode = 'signin';
 
+    const paint = () => {
+        submitBtn.textContent = COPY[mode].submit;
+        toggleBtn.textContent = COPY[mode].toggle;
+    };
+    paint();
 
     toggleBtn.addEventListener('click', ()=> {
         mode = mode === 'signin' ? 'signup' : 'signin';
-        submitBtn.textContent = mode === 'signin' ? 'Sign in' : 'Sign up';
-        toggleBtn.textContent = mode === 'signin' ? 'Sign up' : 'Log In'
+        paint();
     })
 
     form.addEventListener('submit', async(e) =>{

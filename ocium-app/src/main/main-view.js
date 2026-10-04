@@ -49,7 +49,7 @@ export function renderMainView() {
     </section>
     <section class="recently-added">
         <h3>Recently Added</h3>
-        <button class="see-button">See all</button>
+        <button class="see-button" data-navigate="library">See all</button>
         <div class="media-carrousel">
 
         </div>

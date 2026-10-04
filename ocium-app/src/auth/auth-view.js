@@ -4,9 +4,9 @@ export function renderAuthView() {
         <form class="authForm">
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" class="authSubmit">Login</button>
+            <button type="submit" class="authSubmit">Log in</button>
         </form>
-        <p>you dont have account? <button type="button" class="toggleMode">Register.</button></p>
+        <p>you don't have an account? <button type="button" class="toggleMode">Sign up</button></p>
     </div>
     `
 }

@@ -49,6 +49,13 @@ navBar.addEventListener('click', (e) => {
     if (view) navigateTo(view);
 });
 
+renderContainer.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-navigate]');
+    if (!trigger) return;
+    const view = trigger.dataset.navigate;
+    if (view) navigateTo(view);
+});
+
 function updateNavVisibility(session) {
     navBar.classList.toggle('hide', !session);
 }

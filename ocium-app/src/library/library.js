@@ -62,7 +62,6 @@ function showFinished(finishedCheck, root, isStale) {
     mediaDone = finishedCheck.checked ? true : false;
     finishedCheck.addEventListener('change', async () => {
         mediaDone = finishedCheck.checked;
-        console.log(mediaDone);
         await renderCurrentPage(root, isStale);
     });
 }

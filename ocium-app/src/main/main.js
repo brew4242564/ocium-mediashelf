@@ -23,12 +23,10 @@ export function initRandomButtons(root, isStale) {
     container.addEventListener('click', async(e) => {
         const button = e.target.closest('.categoryButton');
         if (!button) return;
-        console.log('funciono')
         if (button.dataset.category) {
             const myId = ++randomId;
             const random = await getRandom(button.dataset.category);
             if(isStale() || myId !== randomId || !randomResultContainer) return;
-            console.log(random)
             randomResultContainer.innerHTML = makeCard(random)
         }
     })
@@ -36,7 +34,6 @@ export function initRandomButtons(root, isStale) {
 
 async function getRandom(category) {
     const allItems = await getItems();
-    console.log(allItems);
     const filtered = allItems.filter(item => item.category === category && item.done === false);
     if(filtered.length === 0) return null;
     const aux = Math.floor(Math.random() * filtered.length);

@@ -92,6 +92,19 @@
         gap: calc(var(--spacing) * .75);
     }
 
+    /* fade + slide on render */
+    .media-list,
+    .empty-message {
+        opacity: 0;
+        transform: translateY(.5rem);
+        transition: opacity .25s ease, transform .25s ease;
+
+        &.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     .media-card {
         flex-direction: column;
         gap: .5rem;
@@ -161,5 +174,12 @@
         .media-list {
             grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
         }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .itemsContainer .media-list,
+    .itemsContainer .empty-message {
+        transition: none;
     }
 }

@@ -13,6 +13,12 @@ function paginate(items, page, pageSize) {
     return items.slice(start, start + pageSize);
 }
 
+function fadeIn(container) {
+    const next = container.firstElementChild;
+    if (!next) return;
+    requestAnimationFrame(() => requestAnimationFrame(() => next.classList.add('visible')));
+}
+
 
 async function renderCurrentPage(root, isStale) {
     const myId = ++renderId;
@@ -25,6 +31,7 @@ async function renderCurrentPage(root, isStale) {
         : allItems.filter(item => item.done === mediaDone);
     const pageItems = paginate(filtered, currentPage, PAGE_SIZE);
     container.innerHTML = renderMediaList(pageItems, { showControls: true });
+    fadeIn(container);
 }
 
 export async function initLibrary(root, isStale) {

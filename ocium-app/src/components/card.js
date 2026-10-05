@@ -15,6 +15,7 @@ function safeImageURL(value){
 }
 
 export function makeCard(item, options = {}) {
+    if(!item) return;
     const done = item.done ? 'is-done' : '';
     const { showControls = false } = options;
     const title = escapeHTML(item.title);

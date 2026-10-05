@@ -65,7 +65,7 @@ function updateNavVisibility(session) {
 const { data: {session} } = await supabase.auth.getSession();
 let currentUser = session?.user?.id ?? null;
 
-navigateTo(session ? 'add' : 'auth');
+navigateTo(session ? 'main' : 'auth');
 
 supabase.auth.onAuthStateChange((event, session)=>{
     const newUser = session?.user?.id ?? null;
